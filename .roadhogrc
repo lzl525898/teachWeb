@@ -1,0 +1,28 @@
+{
+  "entry": "src/index.js",
+  "disableCSSModules": false,
+  "cssModulesExclude": [],
+  "publicPath": "/",
+  "outputPath": "./dist",
+  "extraBabelPlugins": [
+  -    "transform-runtime"
+  +    "transform-runtime",
+  +    ["import", { "libraryName": "antd", "style": "css" }
+  ],
+  "extraPostCSSPlugins": [],
+  "sass": false,
+  "hash": false,
+  "autoprefixer": {
+    "browsers": [
+      "iOS >= 8", "Android >= 4"
+    ]
+  },
+  "proxy": null,
+  "externals": null,
+  "library": null,
+  "libraryTarget": "var",
+  "multipage": false,
+  "define": null,
+  "env": null,
+  "theme": null,
+}
