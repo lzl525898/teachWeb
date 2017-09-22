@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 
 import BackendIndex from './views/backendIndex';
 import BackendLogin from './views/backendLogin';
+import HomePage from './views/index';
 
 class Index extends Component {
   constructor(props){
@@ -19,6 +20,8 @@ class Index extends Component {
       <div style={{height:"100%"}}>
         <Router>
           <Switch>
+            <Redirect exact from='/' to='/index'/>
+            <Route exact path="/index" component={HomePage} />
             <Redirect exact from='/manage' to='/manage/index'/>
             <Route exact path="/manage/index" component={BackendIndex} />
             <Route exact path="/manage/login" component={BackendLogin} />

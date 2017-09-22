@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import {
   Row,
   Col,
+  Tabs,
   Layout,
   Menu,
   Icon,
   Avatar,
   Badge,
+  Table,
+  Button,
+  Calendar,
   Dropdown } from 'antd';
 import { Link } from 'react-router-dom';
+const TabPane = Tabs.TabPane;
 const { SubMenu, Item } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -41,6 +46,7 @@ const styles = {
   contentLayout: {
     marginLeft: 150,
     height: '100%',
+    minWidth: 760,
     background: '#ffba11'
   },
   menu: {
@@ -52,15 +58,82 @@ const styles = {
   avatarMenu: {
     width: 120,
     textAlign:'center'
+  },
+  calendarContainer:{
+    background:'#f3f4f8',
+    position:'absolute',
+    width: 230,
+    border: '1px solid #d9d9d9',
+    borderRadius: 4,
+    top:30,
+    right:0,
+    zIndex:9999
   }
 }
+
+const courseColumns = [{
+  title: '昨日开课数',
+  dataIndex: 'courseCount',
+}, {
+  title: '总课程数',
+  dataIndex: 'allCount',
+}, {
+  title: '老师数量',
+  dataIndex: 'teacherCount',
+}, {
+  title: '学生数量',
+  dataIndex: 'studentCount',
+}, {
+  title: '截止日期',
+  dataIndex: 'closeData',
+}];
+
+const courseData = [{
+  key: '1',
+  courseCount: 0,
+  allCount: 1,
+  teacherCount: 1,
+  studentCount: 1,
+  closeData: '2017-09-21'
+}];
+
+const orderColumns = [{
+  title: '未支付订单',
+  dataIndex: 'outOrder',
+}, {
+  title: '成功支付订单',
+  dataIndex: 'successOrder',
+}];
+
+const orderData = [{
+  key: '1',
+  outOrder: 0,
+  successOrder: 0,
+}];
 
 class BackendMain extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      showCalendar: false
+    }
     console.log(this.props);
   }
+  showCalendar(){
+    this.setState({
+      showCalendar: !this.state.showCalendar
+    });
+  }
   render(){
+    const calendar =
+    (
+      true==this.state.showCalendar ?
+      <div style={styles.calendarContainer}>
+        <Calendar fullscreen={false}/>
+      </div>
+      :
+      <div></div>
+    )
     return(
       <div>
         <div style={{
@@ -75,11 +148,63 @@ class BackendMain extends Component {
                        marginLeft:20, marginTop:16, marginBottom:5,color:'#363636'}}>
             {this.props.userName}&nbsp;&nbsp;({this.props.userPhone})
           </div>
-          <Row style={{marginLeft:20,marginRight:20,background:"#ffba11"}}>
-            <Col span={16}>col-12</Col>
-            <Col span={1}>col-12</Col>
-            <Col span={6}>col-12</Col>
+          <Row style={{marginLeft:20,marginRight:20}}>
+            <Col span={15}>
+              <Table
+                size="small"
+                columns={courseColumns}
+                dataSource={courseData}
+                bordered={true}
+                pagination={false}
+              />
+            </Col>
+            <Col span={1}></Col>
+            <Col span={8}>
+              <Table
+                size="small"
+                columns={orderColumns}
+                dataSource={orderData}
+                bordered={true}
+                pagination={false}
+              />
+            </Col>
           </Row>
+        </div>
+        <Row style={{marginLeft:20,marginRight:20, marginTop:50}}>
+          <Col style={{fontSize:'16px', display:'flex',justifyContent:"flex-start",color:'#363636'}} span={12}>开课趋势图</Col>
+          <Col style={{display:'flex',justifyContent:"flex-end"}} span={12}>
+            <div style={{float:'right'}}>
+              <Button style={{position:'relative'}} onClick={this.showCalendar.bind(this)}>
+                选择日期
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Icon type="down" />
+              </Button>
+            </div>
+          </Col>
+          { calendar }
+        </Row>
+        <div style={{marginLeft:20,marginRight:20}}>
+          <Tabs type="card" tabBarStyle={{display:'flex',justifyContent:'flex-start'}}>
+            <TabPane tab="1天" key="1" style={{background:'#fff',marginTop:-16}}>
+              <p>Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1</p>
+              <br/>
+              <br/>
+              <p>Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1</p>
+            </TabPane>
+            <TabPane tab="7天" key="2" style={{background:'#fff',marginTop:-16}}>
+              <p>Content of Tab Pane 2</p>
+              <p>Content of Tab Pane 2</p>
+              <p>Content of Tab Pane 2</p>
+            </TabPane>
+            <TabPane tab="30天" key="3" style={{background:'#fff',marginTop:-16}}>
+              <p>Content of Tab Pane 3</p>
+              <p>Content of Tab Pane 3</p>
+              <p>Content of Tab Pane 3</p>
+            </TabPane>
+          </Tabs>
         </div>
       </div>
     )
