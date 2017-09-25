@@ -9,6 +9,7 @@
     "babel-plugin-import": "^1.4.0",
     "babelify": "^7.3.0",
     "body-parser": "^1.18.1",
+    "chart.js": "^2.7.0",
     "crypto": "^1.0.1",
     "css-loader": "^0.28.7",
     "express": "^4.15.4",
