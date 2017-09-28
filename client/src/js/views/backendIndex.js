@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Chart from 'chart.js';
 import {
   Row,
   Col,
@@ -10,9 +11,13 @@ import {
   Badge,
   Table,
   Button,
+  Popover,
+  Tooltip,
   Calendar,
   Dropdown } from 'antd';
 import { Link } from 'react-router-dom';
+import '../../css/tables.css';
+
 const TabPane = Tabs.TabPane;
 const { SubMenu, Item } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -29,7 +34,8 @@ const styles = {
     left: 0,
     width: "100%",
     height: 60,
-    background: '#91D08D'
+    background: '#88C7F4',
+    zIndex:10
   },
   sider: {
     overflow: 'auto',
@@ -57,7 +63,8 @@ const styles = {
   },
   avatarMenu: {
     width: 120,
-    textAlign:'center'
+    textAlign:'center',
+    zIndex:9999
   },
   calendarContainer:{
     background:'#f3f4f8',
@@ -67,25 +74,35 @@ const styles = {
     borderRadius: 4,
     top:30,
     right:0,
-    zIndex:9999
+    zIndex:9
+  },
+  rightBtns:{
+    width: 30,
+    height: 30,
+    marginLeft:10
   }
 }
 
 const courseColumns = [{
-  title: '昨日开课数',
+  title: <div style={{textAlign:'center'}}>昨日开课数</div>,
   dataIndex: 'courseCount',
+  className: 'column-admin'
 }, {
-  title: '总课程数',
+  title: <div style={{textAlign:'center'}}>总课程数</div>,
   dataIndex: 'allCount',
+  className: 'column-admin'
 }, {
-  title: '老师数量',
+  title: <div style={{textAlign:'center'}}>老师数量</div>,
   dataIndex: 'teacherCount',
+  className: 'column-admin'
 }, {
-  title: '学生数量',
+  title: <div style={{textAlign:'center'}}>学生数量</div>,
   dataIndex: 'studentCount',
+  className: 'column-admin'
 }, {
-  title: '截止日期',
+  title: <div style={{textAlign:'center'}}>截止日期</div>,
   dataIndex: 'closeData',
+  className: 'column-admin'
 }];
 
 const courseData = [{
@@ -98,11 +115,13 @@ const courseData = [{
 }];
 
 const orderColumns = [{
-  title: '未支付订单',
+  title: <div style={{textAlign:'center'}}>未支付订单</div>,
   dataIndex: 'outOrder',
+  className: 'column-admin'
 }, {
-  title: '成功支付订单',
+  title: <div style={{textAlign:'center'}}>成功支付订单</div>,
   dataIndex: 'successOrder',
+  className: 'column-admin'
 }];
 
 const orderData = [{
@@ -111,18 +130,91 @@ const orderData = [{
   successOrder: 0,
 }];
 
+const courseLabels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange","Orange"];
+const courseDatasets = [{
+    label: '完成课时数',
+    data: [1,4, 3, 5, 1, 6,0],
+    backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+
+        'rgba(255, 229, 64, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+    ],
+    borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 229, 64, 1)',
+        'rgba(255, 159, 64, 1)'
+    ],
+    borderWidth: 3
+}];
+const courseOptions = {
+    tooltips: {
+        mode: 'point'
+    },
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [{
+        stacked: false,
+        gridLines: {
+          display: true,
+          color: "rgba(255,99,132,0.2)"
+        }
+      }],
+      xAxes: [{
+        stacked: false,
+        gridLines: {
+          display: true
+        }
+      }]
+    }
+};
+const courseType = 'bar';
 class BackendMain extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showCalendar: false
+      showCalendar: false,
+      currentTab: 1
     }
     console.log(this.props);
+  }
+  componentDidUpdate(){
+    var ctx = document.getElementById('courseChart'+(this.state.currentTab-1));
+    var courseChart = new Chart(ctx, {
+    type: courseType,
+    data: {
+            labels: courseLabels,
+            datasets: courseDatasets
+        },
+        options: courseOptions
+    });
+  }
+  componentDidMount(){
+    var ctx = document.getElementById('courseChart0');
+    var courseChart = new Chart(ctx, {
+    type: courseType,
+    data: {
+            labels: courseLabels,
+            datasets: courseDatasets
+        },
+        options: courseOptions
+    });
   }
   showCalendar(){
     this.setState({
       showCalendar: !this.state.showCalendar
     });
+  }
+  selectCurrentTabs(key){
+    this.setState({currentTab:key});
   }
   render(){
     const calendar =
@@ -187,22 +279,43 @@ class BackendMain extends Component {
           { calendar }
         </Row>
         <div style={{marginLeft:20,marginRight:20}}>
-          <Tabs type="card" tabBarStyle={{display:'flex',justifyContent:'flex-start'}}>
-            <TabPane tab="1天" key="1" style={{background:'#fff',marginTop:-16}}>
-              <p>Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1</p>
-              <br/>
-              <br/>
-              <p>Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1 Content of Tab Pane 1</p>
+          <Tabs tabBarStyle={{display:'flex',justifyContent:'flex-start'}}
+                type="card" onChange={this.selectCurrentTabs.bind(this)} defaultActiveKey='1'>
+            <TabPane tab="1天" key="1" style={{background:'#fff',marginTop:-16}} forceRender={false}>
+                <Row>
+                  <Col span={8}>
+                    <div style={{color:'#333333',fontSize:'16px',fontWeight:'bold',textAlign:'left',marginTop:20,marginLeft:20}}>完成课时数统计</div>
+                    <div style={{color:'#AAAAAA',fontSize:'12px',textAlign:'left',marginTop:3,marginLeft:20}}>截止2017-09-27 24:00，总计1课时</div>
+                  </Col>
+                  <Col span={8}></Col>
+                  <Col span={8}>
+                    <div style={{marginTop:20,marginRight:20,display:'flex',justifyContent:'flex-end'}}>
+                      <Tooltip placement="bottom" title={'折线图切换'}>
+                        <Button type="primary" style={styles.rightBtns}></Button>
+                      </Tooltip>
+                      <Tooltip placement="bottom" title={'柱形图切换'}>
+                        <Button type="primary" style={styles.rightBtns}></Button>
+                      </Tooltip>
+                      <Tooltip placement="bottom" title={'还原'}>
+                        <Button type="primary" style={styles.rightBtns}></Button>
+                      </Tooltip>
+                      <Tooltip placement="bottom" title={'保存为图片'}>
+                        <Button type="primary" style={styles.rightBtns}></Button>
+                      </Tooltip>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                    <Col span={2}></Col>
+                    <Col span={20}><canvas id="courseChart0" width='100%' height={300}></canvas></Col>
+                    <Col span={2}></Col>
+                </Row>
             </TabPane>
-            <TabPane tab="7天" key="2" style={{background:'#fff',marginTop:-16}}>
-              <p>Content of Tab Pane 2</p>
-              <p>Content of Tab Pane 2</p>
-              <p>Content of Tab Pane 2</p>
+            <TabPane tab="7天" key="2" style={{background:'#fff',marginTop:-16}} forceRender={false}>
+                <canvas id="courseChart1" width='100%' height={300}></canvas>
             </TabPane>
-            <TabPane tab="30天" key="3" style={{background:'#fff',marginTop:-16}}>
-              <p>Content of Tab Pane 3</p>
-              <p>Content of Tab Pane 3</p>
-              <p>Content of Tab Pane 3</p>
+            <TabPane tab="30天" key="3" style={{background:'#fff',marginTop:-16}} forceRender={false}>
+                <canvas id="courseChart2" width='100%' height={300}></canvas>
             </TabPane>
           </Tabs>
         </div>
@@ -264,7 +377,7 @@ class BackendIndex extends Component {
           <div style={{ float : 'right', height: 60, display: 'flex', alignItems:'center'}}>
             <Dropdown overlay={ avatarMenu } placement="bottomCenter">
                 <span style={{ marginRight: 40, cursor: 'pointer'}}>
-                  <Badge count={0}><Avatar shape="square" icon="user" /></Badge>
+                  <Badge count={0}><Avatar shape="square" icon="user"/></Badge>
                 </span>
             </Dropdown>
             <span style={{ marginRight: 15, cursor: 'pointer'}}>
