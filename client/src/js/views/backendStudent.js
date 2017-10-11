@@ -8,76 +8,121 @@ import {
   Input,
   Button,
   Form,
-  Table
+  Table,
+  Tooltip,
 } from 'antd';
+
+import DetectionHardware from './components/detectionhardware';
 
 import '../../css/tables.css';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
+var studentsTableColumns = [{
+    title: <div style={{textAlign:'center'}}>学生姓名</div>,
+    dataIndex: 'name',
+    className: 'column-student',
+    width: "10%"
+  },{
+    title: <div style={{textAlign:'center'}}>联系方式</div>,
+    dataIndex: 'contact',
+    className: 'column-student',
+    width: "16%"
+  },{
+    title: <div style={{textAlign:'center'}}>自检结果</div>,
+    dataIndex: 'selfcheck',
+    className: 'column-student',
+    width: "24%",
+    render: function(text, record){
+      return(
+        <DetectionHardware
+          cameraUrl = {text[2].url}
+          cameraText = {text[2].text}
+          headsetUrl = {text[0].url}
+          headsetText = {text[0].text}
+          computerUrl = {text[3].url}
+          computerText = {text[3].text}
+          microphoneUrl = {text[1].url}
+          microphoneText = {text[1].text}
+        />
+      )
+    }
+  },{
+    title: <div style={{textAlign:'center'}}>所报课程</div>,
+    dataIndex: 'reported',
+    className: 'column-student',
+    width: "10%"
+  },{
+    title: <div style={{textAlign:'center'}}>出勤率</div>,
+    dataIndex: 'attendance',
+    className: 'column-student',
+    width: "9%"
+  },{
+    title: <div style={{textAlign:'center'}}>上课数量</div>,
+    dataIndex: 'count',
+    className: 'column-student',
+    width: "10%"
+  },{
+    title: <div style={{textAlign:'center'}}>状态</div>,
+    dataIndex: 'status',
+    className: 'column-student',
+    width: "15%"
+  },{
+    title: <div style={{textAlign:'center'}}>评论</div>,
+    dataIndex: 'comment',
+    className: 'column-student',
+    width: "6%"
+  }
+];
+
 class Students extends Component {
   constructor(props){
     super(props);
     this.state={
-      tableColumns: [{
-          title: <div style={{textAlign:'center'}}>学生姓名</div>,
-          dataIndex: 'name',
-          className: 'column-student',
-          width: "10%"
-        },{
-          title: <div style={{textAlign:'center'}}>联系方式</div>,
-          dataIndex: 'contact',
-          className: 'column-student',
-          width: "16%"
-        },{
-          title: <div style={{textAlign:'center'}}>自检结果</div>,
-          dataIndex: 'selfcheck',
-          className: 'column-student',
-          width: "24%",
-          render: (text, record) =>(
-            <div style={{height:"100%",display:"flex"}}>
-              <div style={{flex:1}}>1</div>
-              <div style={{flex:1}}>2</div>
-              <div style={{flex:1}}>3</div>
-              <div style={{flex:1}}>4</div>
+      tableDataSource: [{
+        key: '1',
+        name: '刘彦明',
+        contact: '18745105346',
+        selfcheck: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
             </div>
           )
         },{
-          title: <div style={{textAlign:'center'}}>所报课程</div>,
-          dataIndex: 'reported',
-          className: 'column-student',
-          width: "10%"
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
         },{
-          title: <div style={{textAlign:'center'}}>出勤率</div>,
-          dataIndex: 'attendance',
-          className: 'column-student',
-          width: "9%"
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
         },{
-          title: <div style={{textAlign:'center'}}>上课数量</div>,
-          dataIndex: 'count',
-          className: 'column-student',
-          width: "10%"
-        },{
-          title: <div style={{textAlign:'center'}}>状态</div>,
-          dataIndex: 'status',
-          className: 'column-student',
-          width: "15%"
-        },{
-          title: <div style={{textAlign:'center'}}>评论</div>,
-          dataIndex: 'comment',
-          className: 'column-student',
-          width: "6%"
-        }
-      ],
-      tableDataSource: [{
-        key: '1',
-        name: 0,
-        contact: 0,
-        selfcheck: 0,
-        reported: 0,
-        count: 0,
-        status: 0,
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }],
+        reported: 'ScratchJr',
+        attendance: '100%',
+        count: '0/0',
+        status: '已过服务期',
         comment: 0,
       }]
     }
@@ -163,9 +208,9 @@ class Students extends Component {
           </Col>
         </Row>
         </div>
-        <div style={{marginLeft:20,marginRight:20,marginTop:20}}>
+        <div style={{marginLeft:20,marginRight:20,marginTop:20, height: 500}}>
           <Table
-            columns={this.state.tableColumns}
+            columns={ studentsTableColumns }
             dataSource={this.state.tableDataSource}
             bordered={true}
           />

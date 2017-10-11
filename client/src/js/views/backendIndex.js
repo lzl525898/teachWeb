@@ -18,6 +18,7 @@ import {
 import { Link } from 'react-router-dom';
 import '../../css/tables.css';
 import Student from './backendStudent';
+import Teacher from './backendTeacher';
 
 const TabPane = Tabs.TabPane;
 const { SubMenu, Item } = Menu;
@@ -187,7 +188,7 @@ class BackendMain extends Component {
       showCalendar: false,
       currentTab: 1,
     }
-    console.log(this.props);
+    // console.log(this.props);
   }
   componentDidUpdate(){
     var ctx = document.getElementById('courseChart'+(this.state.currentTab-1));
@@ -405,7 +406,7 @@ class BackendIndex extends Component {
     } else if ('resource_manange'==curKey) {  // 云盘管理
 
     } else if ('teacher_manage'==curKey) {    // 教师管理
-
+      curContent = <Teacher {...this.state} />
     } else if ('student_manage'==curKey) {    // 学生管理
       curContent = <Student {...this.state} />
     } else if ('account_find'==curKey) {      // 财务总览
