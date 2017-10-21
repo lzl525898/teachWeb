@@ -9,14 +9,295 @@ import {
  Card,
 } from 'antd';
 
-import DetectionHardware from './components/detectionhardware';
+import TeacherCard from './components/teacherCard';
 
 class Teacher extends Component {
   constructor(props){
     super(props);
     this.state={
       cardDataSource: [{
-        userName: 'admin',
+        key:1,
+        userName: 'admin1',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:2,
+        userName: 'admin2',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:3,
+        userName: 'admin1',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:4,
+        userName: 'admin2',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:5,
+        userName: 'admin1',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:6,
+        userName: 'admin2',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:7,
+        userName: 'admin1',
+        userPhone: '15046009860',
+        checkDeviceInfo: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-b.png",
+          text:(
+            <div>
+              <div>检测结果 : 不正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }]
+      },
+      {
+        key:8,
+        userName: 'admin2',
         userPhone: '15046009860',
         checkDeviceInfo: [{
           url:"/client/images/student-headset-a.png",
@@ -75,31 +356,16 @@ class Teacher extends Component {
             </Col>
           </Row>
         </div>
-        <div style={{marginLeft:40,marginRight:40,marginTop:40, height: 500}}>
-          <Card style={{ width: 160 }} bodyStyle={{ padding: 0,background:"#f0f8fd" }}>
-            <div style={{marginTop:16,paddingBottom:16,borderBottom:"1px solid #cccccc"}}>
-              <img alt="defaultAvatar" height="100%" src="/client/images/teacher-default-avatar.png" />
-            </div>
-            <div style={{background:"#fff",paddingTop:16}}>
-              <h3 style={{marginTop:-6}}>{this.state.cardDataSource[0].userName}</h3>
-              <div style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"center",position:"relative",marginTop:10}}>
-                <Icon type="phone" style={{position:"absolute", paddingRight:110}}/>
-                <p>{this.state.cardDataSource[0].userPhone}</p>
-              </div>
-              <div style={{height:35, marginTop:10}}>
-                <DetectionHardware
-                  cameraUrl = {this.state.cardDataSource[0].checkDeviceInfo[2].url}
-                  cameraText = {this.state.cardDataSource[0].checkDeviceInfo[2].text}
-                  headsetUrl = {this.state.cardDataSource[0].checkDeviceInfo[0].url}
-                  headsetText = {this.state.cardDataSource[0].checkDeviceInfo[0].text}
-                  computerUrl = {this.state.cardDataSource[0].checkDeviceInfo[3].url}
-                  computerText = {this.state.cardDataSource[0].checkDeviceInfo[3].text}
-                  microphoneUrl = {this.state.cardDataSource[0].checkDeviceInfo[1].url}
-                  microphoneText = {this.state.cardDataSource[0].checkDeviceInfo[1].text}
-                />
-              </div>
-            </div>
-          </Card>
+        <div style={{marginLeft:40,marginRight:40,marginTop:40, height: 500, display:"flex", flexWrap:"wrap"}}>
+          {
+            this.state.cardDataSource.map((data, index)=>{
+              if (0==(index%6)) {
+                return <TeacherCard key={data.key} cardDataSource={data} marginLeft={0} />
+              } else if (0!=(index%6) && (index%6)<6) {
+                return <TeacherCard key={data.key} cardDataSource={data}/>
+              }
+            })
+          }
         </div>
       </div>
     )

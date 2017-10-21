@@ -124,6 +124,51 @@ class Students extends Component {
         count: '0/0',
         status: '已过服务期',
         comment: 0,
+      },
+      {
+        key: '2',
+        name: '潘宇晴',
+        contact: '18745105346',
+        selfcheck: [{
+          url:"/client/images/student-headset-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 扬声器(Realtek High Definition Au)</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-microphone-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 没有检测到麦克风</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-camera-a.png",
+          text:(
+            <div>
+              <div>检测结果 : 正常</div>
+              <div>设备名称 : 没有检测到摄像头</div>
+            </div>
+          )
+        },{
+          url:"/client/images/student-computer-a.png",
+          text:(
+            <div>
+              <div>操作系统 : Windows 7</div>
+              <div>服务名称 : EEO-A1392(Auto)</div>
+              <div>客户端IP : 1.189.209.2</div>
+              <div>检测时间 : 2017-10-11 10:11:11</div>
+            </div>
+          )
+        }],
+        reported: 'ScratchJr',
+        attendance: '100%',
+        count: '0/0',
+        status: '已过服务期',
+        comment: 0,
       }]
     }
   }
