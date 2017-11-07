@@ -14,12 +14,16 @@ import {
   Popover,
   Tooltip,
   Calendar,
+  DatePicker,
   Dropdown } from 'antd';
+
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import '../../css/tables.css';
 import Student from './backendStudent';
 import Teacher from './backendTeacher';
 
+const dateFormat = 'YYYY/MM/DD';
 const TabPane = Tabs.TabPane;
 const { SubMenu, Item } = Menu;
 const { Header, Content, Sider, Footer } = Layout;
@@ -185,7 +189,6 @@ class BackendMain extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showCalendar: false,
       currentTab: 1,
     }
     // console.log(this.props);
@@ -216,15 +219,14 @@ class BackendMain extends Component {
     });
   }
   /*
-  **是否显示日历
+  **点选时间过滤器的回调
   **
-  **showCalendar：false不显示 true显示
+  **dates：时间对象
+  **dateStrings：时间字符串
   **
   */
-  showCalendar(){
-    this.setState({
-      showCalendar: !this.state.showCalendar
-    });
+  handleDatePicker(dates, dateStrings){
+    console.log('From: ', dateStrings, ', to: ', dateStrings);
   }
   /*
   **当前选择的tabs回调
@@ -235,16 +237,24 @@ class BackendMain extends Component {
   selectCurrentTabs(key){
     this.setState({currentTab:key});
   }
+  /*
+  **获取当前日期
+  */
+  getCurrentDate(){
+    var date = new Date();
+    var seperator = "/";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator + month + seperator + strDate;
+    return currentdate;
+  }
   render(){
-    const calendar =
-    (
-      true==this.state.showCalendar ?
-      <div style={styles.calendarContainer}>
-        <Calendar fullscreen={false}/>
-      </div>
-      :
-      <div></div>
-    )
     const buttonGroups = (
       <Row>
         <Col span={8}>
@@ -310,17 +320,14 @@ class BackendMain extends Component {
           <Col style={{fontSize:'16px', display:'flex',justifyContent:"flex-start",color:'#363636'}} span={12}>开课趋势图</Col>
           <Col style={{display:'flex',justifyContent:"flex-end"}} span={12}>
             <div style={{float:'right'}}>
-              <Button style={{position:'relative'}} onClick={this.showCalendar.bind(this)}>
-                选择日期
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Icon type="down" />
-              </Button>
+              <DatePicker
+                  defaultValue={moment(this.getCurrentDate(), dateFormat)}
+                  format={dateFormat}
+                  style={{width:230}}
+                  onChange={this.handleDatePicker.bind(this)}
+              />
             </div>
           </Col>
-          { calendar }
         </Row>
         <div style={{marginLeft:20,marginRight:20}}>
           <Tabs tabBarStyle={{display:'flex',justifyContent:'flex-start'}}

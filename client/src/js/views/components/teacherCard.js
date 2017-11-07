@@ -8,6 +8,7 @@ import DetectionHardware from './detectionhardware';
 
 const defaultProps = {
   marginLeft: 40,
+  marginTop: 40,
   cardData : [{
     userName: 'admin',
     userPhone: '15046009860',
@@ -50,9 +51,13 @@ const defaultProps = {
 }
 
 class TeacherCard extends Component {
+  currentTeacherItem(data){
+    this.props.intoTeacherDetailPage(data);
+  }
   render(){
     return(
-      <Card style={{ width: 160, height: 270, marginLeft: this.props.marginLeft }} bodyStyle={{ padding: 0,background:"#f0f8fd" }}>
+      <Card style={{ width: 160, height: 270, marginLeft: this.props.marginLeft, marginTop: this.props.marginTop }}
+            bodyStyle={{ padding: 0,background:"#f0f8fd" }} onClick={this.currentTeacherItem.bind(this,this.props.cardDataSource)}>
         <div style={{marginTop:16,paddingBottom:16,borderBottom:"1px solid #cccccc"}}>
           <img alt="defaultAvatar" height="100%" src="/client/images/teacher-default-avatar.png" />
         </div>
@@ -82,6 +87,7 @@ class TeacherCard extends Component {
 
 TeacherCard.propTypes = {
   marginLeft: React.PropTypes.number, // 左边距离
+  marginTop: React.PropTypes.number, //上边距离
   cardDataSource: React.PropTypes.object.isRequired // 教师面板相关信息
 }
 TeacherCard.defaultProps = defaultProps;
