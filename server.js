@@ -7,7 +7,7 @@ var server = express(); // 创建服务对象
 var tokenHandler = require('./server/utils/token');
 
 mongoose.Promise = global.Promise; // DeprecationWarning: Mongoose: mpromise
-mongoose.connect('mongodb://localhost/testdb'); // 连接数据库
+mongoose.connect('mongodb://localhost/luckyforlei'); // 连接数据库
 
 // parse application/json
 server.use(bodyParser.json());
@@ -15,6 +15,8 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 //for parsing multipart/form-data
 server.use(multer());
+//配置静态路径
+server.use(express.static(__dirname + '/dist'));
 
 var apiRoutes = require('./server/routes/api'); // 导入路由模块
 
@@ -35,8 +37,8 @@ server.all('/api/*', function(req, res, next){
     var token = req.query.token;
     if (undefined===token) { // 没有传递token值
       return res.json({
-        'isdeny': 'no',
-        'title': 'token认证'
+       'isdeny': 'no',
+       'title': 'token认证'
       });
     }
     if (tokenHandler.checkToken(token)) { // token校验通过
